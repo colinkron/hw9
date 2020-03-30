@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title> JSON Music </title>
+	<style type="text/css">
+		#column {
+	  float: left;
+	  width: 50%	;
+		padding-top: 10px;
+		}
+		* {
+	  box-sizing: border-box;
+		}
+		.row:after {
+	  content: "";
+	  display: table;
+	  clear: both;
+		}
+		#filterTitle {
+			font-size: 20px;
+			font-style: oblique;
+		}
+		body {
+			background-image: linear-gradient(to top, #b0bccc, #f0ece7);
+ 		font-family: 'Avenir', sans-serif;
+		}
+	</style>
+</head>
+
+<body>
+  <div style="margin-left: 10%; margin-right: 10%; margin-top: 5%;">
+			<h1 align=center> JSON Music </h1>
+			<div class="row">
+		  <h2> Serialized Data </h2>
+		    <div id = "serialized"> </div>
+		    <!-- this will be accessed in javascript + printed to innerHTML -->
+				<div id="column">
+			<h2> User Friendly Data </h2>
+				<div id = "userfriendly"> </div>
+		</div>
+		<div id="column">
+			<h2> Filter </h2>
+
+			<form>
+			  <select id="select" onchange="sort();" style="width: 20%; font-size: 12px;">
+
+					<option value="Acoustic Rock"> Acoustic Rock </option>
+	        <option value="R&B"> R&B </option>
+					<option value="Pop"> Pop </option>
+					<option value="Folk"> Folk </option>
+					<option value="Indie Rock"> Indie Rock </option>
+					<option value="Bedroom Pop"> Bedroom Pop </option>
+					<option value="Jazz"> Jazz </option>
+	      </select>
+	    </form>
+
+			<div id="filterTitle"></div>
+		  <div id="genre"></div>
+			</div>
+		</div>
+	</div>
+
+  <script language="javascript">
+
+    var list = [
+    {"title":"Why Georgia", "artist":["John Mayer"], "year":2001, "genre":["Acoustic Rock", "Pop"]},
+			{"title":"Alaska", "artist":["Maggie Rogers"], "year":2016, "genre":["Pop", "Folk"]},
+			{"title":"Someday", "artist":["The Strokes"], "year":2001, "genre":["Indie Rock"]},
+			{"title":"Doing It", "artist":["Charli XCX", "Rita Ora"], "year":2014, "genre":["Pop"]},
+			{"title":"Lay All Your Love On Me", "artist":["ABBA"], "year":1980, "genre":["Pop"]},
+			{"title":"You Da One", "artist":["Rihanna"], "year":2011, "genre":["Pop", "R&B"]},
+			{"title":"Love On Top", "artist":["Beyoncé"], "year":2011, "genre":["Pop", "R&B"]},
+			{"title":"On The Sea", "artist":["Beach House"], "year":2012, "genre":["Bedroom Pop"]},
+			{"title":"Harvest Moon", "artist":["Neil Young"], "year":1992, "genre":["Folk"]},
+			{"title":"I Don't Want To Set The World On Fire", "artist":["The Ink Spots"], "year":1941, "genre":["Jazz"]},
+      ];
+
+			//display serialized data
+			for (var i = 0; i < list.length; i++) {
+			document.getElementById("serialized").innerHTML += JSON.stringify(list[i]) + "</br>";
+			}
+
+			//user friendly display
+			for (var i = 0; i < list.length; i++) {
+				result = print_song(i);
+				document.getElementById("userfriendly").innerHTML += result;
+			}
+			// function that organizes how each song will be printed
+			function print_song(i) {
+				song = list[i].title;
+
+				artist = list[i].artist[0];
+					for (var j = 1; j < list[i].artist.length; j++) {
+						artist += ", " + list[i].artist[j];
+					}
+
+					//year
+					year = list[i].year;
+
+					//genre
+				genre = list[i].genre[0];
+					for (var j = 1; j < list[i].genre.length; j++) {
+						genre += ", " + list[i].genre[j];
+					}
+
+					result = "<b>" + song + "</b><br> Artist(s): " + artist + "<br> Year: " + year + "<br>Genre(s): " + genre +"<br><br>";
+
+					return result;
+			}
+			// filter/sorts the songs by genre and prints to screen
+			function sort() {
+				userPick = document.getElementById("select").value;
+
+				document.getElementById("genre").innerHTML = "";
+
+					document.getElementById("filterTitle").innerHTML = "<br>" +
+						userPick + " songs: <br><br>";
+					for (var i = 0; i < list.length; i++) {
+						for (var j = 0; j < list[i].genre.length; j++) {
+							if (userPick == list[i].genre[j]) {
+								// if they choose pop, find the song with that genre...
+								document.getElementById("genre").innerHTML += print_song(i);
+								 // print it to "genre" div
+							}
+						}
+					}
+				}
+  </script>
+</body>
