@@ -92,7 +92,7 @@
 
 				artist = list[i].artist[0];
 					for (var j = 1; j < list[i].artist.length; j++) {
-						artist += ", " + list[i].artist[j];
+						artist += " & " + list[i].artist[j];
 					}
 
 					//year
@@ -101,7 +101,7 @@
 					//genre
 				genre = list[i].genre[0];
 					for (var j = 1; j < list[i].genre.length; j++) {
-						genre += ", " + list[i].genre[j];
+						genre += " & " + list[i].genre[j];
 					}
 
 					result = "<b>" + song + "</b><br> Artist(s): " + artist + "<br> Year: " + year + "<br>Genre(s): " + genre +"<br><br>";
@@ -112,7 +112,7 @@
 			function sort() {
 				userPick = document.getElementById("select").value;
 
-				document.getElementById("genre").innerHTML = "";
+				document.getElementById("genre").innerHTML = ""; // reset
 
 					document.getElementById("filterTitle").innerHTML = "<br>" +
 						userPick + " songs: <br><br>";
@@ -126,5 +126,5 @@
 						}
 					}
 				}
-  </script> 
+  </script>
 </body>
